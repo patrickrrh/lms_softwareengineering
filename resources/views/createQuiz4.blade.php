@@ -57,7 +57,7 @@
                 </div>
             </div> --}}
         </div>
-        <form action="" method="POST" onsubmit="return confirm('Are you want to create this quiz?');">
+        <form action="{{ route('saveQuiz') }}" method="POST" onsubmit="return confirm('Are you want to create this quiz?');">
             <div class="content">
                 <div class="content-wrap">
                     <h1 class="title-margin"> Add quiz detail </h1>

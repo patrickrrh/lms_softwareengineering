@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
+    
     function show() {
         $data = Quiz::join('courses', 'courses.CourseID', '=', 'quizzes.CourseID')
             ->join('classrooms', 'classrooms.ClassroomID', '=', 'quizzes.ClassroomID')
@@ -39,6 +40,48 @@ class QuizController extends Controller
 
         $totalQuestion = QuestionController::countQuestion($QuizID);
         return view('quizDetails', compact('quiz', 'totalQuestion'));
+    }
+
+    public function saveQuiz(Request $request)
+    {
+        // Retrieve the form data
+        $quizData = $request->validate([
+            'QuizName' => 'required',
+            'QuizInformations' => 'nullable',
+            'QuizDate' => 'nullable|date',
+            'QuizStart' => 'nullable',
+            'QuizEnd' => 'nullable',
+            'QuizArticle' => 'nullable',
+            'QuizQuestion1' => 'required',
+            'QuizQuestion2' => 'required',
+            'QuizQuestion3' => 'required',
+        ]);
+
+        // Create the quiz
+        $quiz = Quiz::create([
+            'name' => $quizData['QuizName'],
+            'informations' => $quizData['QuizInformations'],
+            'date' => $quizData['QuizDate'],
+            'start_time' => $quizData['QuizStart'],
+            'end_time' => $quizData['QuizEnd'],
+            'article' => $quizData['QuizArticle'],
+        ]);
+
+        // Create the questions
+        $questions = [
+            $quizData['QuizQuestion1'],
+            $quizData['QuizQuestion2'],
+            $quizData['QuizQuestion3'],
+        ];
+
+        foreach ($questions as $question) {
+            $quiz->questions()->create([
+                'question' => $question,
+            ]);
+        }
+
+        // Redirect or perform any other necessary actions
+        return redirect()->route('success')->with('message', 'Quiz created successfully!');
     }
 
 

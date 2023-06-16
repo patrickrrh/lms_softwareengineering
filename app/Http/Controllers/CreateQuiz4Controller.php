@@ -7,45 +7,91 @@ use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class CreateQuiz4Controller extends Controller
+class QuizController extends Controller
 {
-    public function createQuiz4(Request $request, $quizID)
+    public function saveQuiz(Request $request)
     {
-        // Retrieve the appropriate quiz data from the database
-        $quiz = new Quiz;
-
-        // Update the quiz model with the form input data
-
-        $quiz->quiz_name = $request->input('QuizName');
-        $quiz->informations = $request->input('QuizInformations');
-        $quiz->date = $request->input('QuizDate');
-        $quiz->start_time = $request->input('QuizStart');
-        $quiz->end_time = $request->input('QuizEnd');
-
-        // Save the updated quiz data to the database
-        $quiz->save();
-
-        // Redirect the user to the next step or page
-        return Redirect::route('nextStep');
-    }
-
-    public function storeQuizInfo(Request $request){
-        $validatedData = $request->validate([
+        // Retrieve the form data
+        $quizData = $request->validate([
             'QuizName' => 'required',
-            'QuizInformations' => 'required',
-            'QuizDate' => 'required',
-            'QuizStart' => 'required',
-            'QuizEnd' => 'required',
-            'QuizArticle' => 'required',
+            'QuizInformations' => 'nullable',
+            'QuizDate' => 'nullable|date',
+            'QuizStart' => 'nullable',
+            'QuizEnd' => 'nullable',
+            'QuizArticle' => 'nullable',
             'QuizQuestion1' => 'required',
             'QuizQuestion2' => 'required',
             'QuizQuestion3' => 'required',
         ]);
 
-        Quiz::create($validatedData);
+        // Create the quiz
+        $quiz = Quiz::create([
+            'name' => $quizData['QuizName'],
+            'informations' => $quizData['QuizInformations'],
+            'date' => $quizData['QuizDate'],
+            'start_time' => $quizData['QuizStart'],
+            'end_time' => $quizData['QuizEnd'],
+            'article' => $quizData['QuizArticle'],
+        ]);
 
-        return redirect('/createQuiz4');
+        // Create the questions
+        $questions = [
+            $quizData['QuizQuestion1'],
+            $quizData['QuizQuestion2'],
+            $quizData['QuizQuestion3'],
+        ];
+
+        foreach ($questions as $question) {
+            $quiz->questions()->create([
+                'question' => $question,
+            ]);
+        }
+
+        // Redirect or perform any other necessary actions
+        return redirect()->route('success')->with('message', 'Quiz created successfully!');
     }
+}
+
+
+// class CreateQuiz4Controller extends Controller
+// {
+//     public function createQuiz4(Request $request, $quizID)
+//     {
+//         // Retrieve the appropriate quiz data from the database
+//         $quiz = new Quiz;
+
+//         // Update the quiz model with the form input data
+
+//         $quiz->quiz_name = $request->input('QuizName');
+//         $quiz->informations = $request->input('QuizInformations');
+//         $quiz->date = $request->input('QuizDate');
+//         $quiz->start_time = $request->input('QuizStart');
+//         $quiz->end_time = $request->input('QuizEnd');
+
+//         // Save the updated quiz data to the database
+//         $quiz->save();
+
+//         // Redirect the user to the next step or page
+//         return Redirect::route('nextStep');
+//     }
+
+//     public function storeQuizInfo(Request $request){
+//         $validatedData = $request->validate([
+//             'QuizName' => 'required',
+//             'QuizInformations' => 'required',
+//             'QuizDate' => 'required',
+//             'QuizStart' => 'required',
+//             'QuizEnd' => 'required',
+//             'QuizArticle' => 'required',
+//             'QuizQuestion1' => 'required',
+//             'QuizQuestion2' => 'required',
+//             'QuizQuestion3' => 'required',
+//         ]);
+
+//         Quiz::create($validatedData);
+
+//         return redirect('/createQuiz4');
+//     }
 
     // public function storePage3(Request $request){
     //     // $inputValue = $request->input('dropdown'); // Replace 'dropdown' with the name of your dropdown input
@@ -82,4 +128,4 @@ class CreateQuiz4Controller extends Controller
     //     // Redirect or perform any other actions
     //     return redirect()->route('cq4');
     // }
-}
+// }

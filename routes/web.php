@@ -50,8 +50,10 @@ Route::get('/createQuiz1/createQuiz2/{classId}', [CreateQuiz2Controller::class, 
 Route::get('/createQuiz1/createQuiz2/createQuiz3/{SessionId}', [CreateQuiz3Controller::class, 'CourseSessions']);
 // Route::post('/createQuiz1/createQuiz2/createQuiz3/{SessionId}', [CreateQuiz3Controller::class, 'storePage3'])->name('cq3');
 
-Route::post('/createQuiz4', [CreateQuiz4Controller::class, 'storeQuizInfo']);
+// Route::post('/createQuiz4', [CreateQuiz4Controller::class, 'storeQuizInfo']);
 // Route::post('/createQuiz4', [CreateQuiz4Controller::class, 'storePage3'])->name('cq4');
+Route::post('/saveQuiz', [QuizController::class, 'saveQuiz'])->name('saveQuiz');
+
 
 Route::get('/quizList/quizDetails/{QuizID}', [QuizController::class, 'quizDetails']);
 Route::get('/quizList', [QuizController::class, 'show']);
