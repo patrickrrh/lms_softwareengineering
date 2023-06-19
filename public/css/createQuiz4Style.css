@@ -1,4 +1,5 @@
 .content-middle{
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -107,7 +108,7 @@
     align-items: center;
     width: 100%;
     overflow-y: scroll;
-    height: 600px;
+    height: 530px;
 }
 
 .content::-webkit-scrollbar {
@@ -272,8 +273,4 @@
 
 .textTotalQuestion{
     font-size: 14px;
-}
-
-.title-margin{
-    margin-top: 50px;
 }

@@ -1,5 +1,6 @@
 @extends('layouts.navbarTwoForTeacher')
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,55 +12,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
 @section('container')
-    <div class="content-middle">
-        <div class="steps">
-            <div class="step-layout">
-                <a href="" class="step-layout-button-diff" id="first-step">
-                    <p class="spacing" id="number1">1</p>
-                    <p class="spacing" id="desc1">Class</p>
-                </a>
-                <p class="spacing" id="arrow-diff">></p>
-            </div>
-            <div class="step-layout">
-                <div class="step-layout-button-diff" id="second-step">
-                    <p class="spacing" id="number2">2</p>
-                    <p class="spacing" id="desc2">Subject</p>
-                </div>
-                <p class="spacing" id="arrow-diff">></p>
-            </div>
-            <div class="step-layout">
-                <div href="" class="step-layout-button-diff" id="third-step">
-                    <p class="spacing" id="number3">3</p>
-                    <p class="spacing" id="desc3">Topic</p>
-                </div>
-                <p class="spacing" id="arrow-diff">></p>
-            </div>
-            <div class="step-layout">
-                <div href="" class="step-layout-button-diff" id="fourth-step">
-                    <p class="spacing" id="number4">4</p>
-                    <p class="spacing" id="desc4">Information</p>
-                </div>
-                {{-- <p class="spacing" id="arrow-diff">></p> --}}
-            </div>
-            {{-- <div class="step-layout">
-                <div href="" class="step-layout-button" id="fifth-step">
-                    <p class="spacing" id="number5">5</p>
-                    <p class="spacing" id="desc5">Questions</p>
-                </div>
-                <p class="spacing" id="arrow">></p>
-            </div>
-            <div class="step-layout">
-                <div href="" class="step-layout-button" id="sixth-step">
-                    <p class="spacing" id="number6">6</p>
-                    <p class="spacing" id="desc6">Upload</p>
-                </div>
-            </div> --}}
-        </div>
+    <div class="content-middle">    
         <form action="{{ route('saveQuiz') }}" method="POST" onsubmit="return confirm('Are you want to create this quiz?');">
             <div class="content">
                 <div class="content-wrap">
+                    <div class="dropdown-row">
+                        <div class="dropdown-class">
+                            <button class="dropdown-button-class">Select</button>
+                            <div class="dropdown-content-class">
+                                @foreach ($classes as $class)
+                                    <a href="#" class="class-name" name="dropdown">{{ $class->className }}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                     <h1 class="title-margin"> Add quiz detail </h1>
                     <div class="spaceInput">
                         <div class="label">
@@ -114,10 +81,6 @@
                 <div class="content-wrap">
                     <div class = "end-to-end">
                         <h1> Questions </h1>
-                        <div class="right">
-                            {{-- <p class="textTotalQuestion"> Total quetions: </p> --}}
-                            {{-- Isi Data --}}
-                        </div>
                     </div>
                     <div class="spaceInput">
                         <div class="label">

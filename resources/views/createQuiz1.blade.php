@@ -70,10 +70,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="action-button">
-            <button class="savecontinue"><a href="{{ route('createQuiz2', ['clickedValue' => $class['ClassroomID']]) }}">{{ $class['ClassroomName'] }}</a>
-            </button>
-        </div> --}}
     </div>
 
 </body>

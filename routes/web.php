@@ -32,6 +32,11 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
+Route::get('/createQuiz', function () {
+    return view('createQuiz');
+});
+
+
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth');
 
 Route::get('/register', [RegisterController::class, 'create'])->middleware(('guest'));
@@ -50,8 +55,6 @@ Route::get('/createQuiz1/createQuiz2/{classId}', [CreateQuiz2Controller::class, 
 Route::get('/createQuiz1/createQuiz2/createQuiz3/{SessionId}', [CreateQuiz3Controller::class, 'CourseSessions']);
 // Route::post('/createQuiz1/createQuiz2/createQuiz3/{SessionId}', [CreateQuiz3Controller::class, 'storePage3'])->name('cq3');
 
-// Route::post('/createQuiz4', [CreateQuiz4Controller::class, 'storeQuizInfo']);
-// Route::post('/createQuiz4', [CreateQuiz4Controller::class, 'storePage3'])->name('cq4');
 Route::post('/saveQuiz', [QuizController::class, 'saveQuiz'])->name('saveQuiz');
 
 
@@ -88,9 +91,7 @@ Route::get('/grade2', [Grade2Controller::class, 'index']);
 
 Route::match(['get', 'post', 'put', 'patch'], '/editProfile', [UserController::class, 'editProfile']);
 
-Route::get('/createQuiz4', function () {
-    return view('createQuiz4');
-});
+Route::get('/createQuiz4', [QuizController::class, 'index'])->name('createQuiz4');
 
 Route::get('/createQuiz5', function () {
     return view('createQuiz5');
